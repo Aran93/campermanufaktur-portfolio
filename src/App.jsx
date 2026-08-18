@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 
+// Basis-Pfad für GitHub Pages
+const BASE_PATH = '/campermanufaktur-portfolio'
+
 function App() {
   const [aktuelleSeite, setAktuelleSeite] = useState('home')
   
@@ -9,12 +12,12 @@ function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const galleryImages = [
-    '/image/slider1.png',
-    '/image/slider2.png',
-    '/image/slider3.png',
-    '/image/slider4.png',
-    '/image/slider5.png',
-    '/image/slider6.png'
+    `${BASE_PATH}/image/slider1.png`,
+    `${BASE_PATH}/image/slider2.png`,
+    `${BASE_PATH}/image/slider3.png`,
+    `${BASE_PATH}/image/slider4.png`,
+    `${BASE_PATH}/image/slider5.png`,
+    `${BASE_PATH}/image/slider6.png`
   ]
 
   const openSlider = (index) => {
@@ -39,7 +42,7 @@ function App() {
       {/* NAVIGATION */}
       <nav className="navbar">
         <div className="logo" onClick={() => setAktuelleSeite('home')}>
-          <img src="/image/LOGO.webp" alt="Campermanufaktur Logo" className="logo-img" />
+          <img src={`${BASE_PATH}/image/LOGO.webp`} alt="Campermanufaktur Logo" className="logo-img" />
         </div>
         <div className="nav-links">
           <a href="#home" onClick={() => setAktuelleSeite('home')}>Home</a>
@@ -52,9 +55,8 @@ function App() {
 
       {aktuelleSeite === 'home' && (
         <>
-                    {/* 1. HERO SECTION MIT ANIMATIONEN */}
+          {/* 1. HERO SECTION MIT ANIMATIONEN */}
           <header className="hero-section">
-            {/* Das Bild wird jetzt über CSS ::before animiert (Ken Burns) */}
             <div className="hero-overlay"></div>
             
             <div className="hero-content">
@@ -71,7 +73,7 @@ function App() {
               </div>
             </div>
 
-            {/* Scroll Indicator (Die animierte Maus unten) */}
+            {/* Scroll Indicator */}
             <div className="scroll-indicator fade-in delay-5">
               <div className="mouse">
                 <div className="wheel"></div>
@@ -113,9 +115,6 @@ function App() {
                 {galleryImages.slice(0, 4).map((bild, index) => (
                   <div key={index} className="gallery-item" onClick={() => openSlider(index)}>
                     <img src={bild} alt={`Galerie ${index + 1}`} />
-                    <div className="gallery-overlay">
-                      <span className="zoom-icon">🔍</span>
-                    </div>
                   </div>
                 ))}
               </div>
@@ -124,8 +123,8 @@ function App() {
 
           {/* LIGHTBOX SLIDER */}
           {isSliderOpen && (
-            <div className="lightbox">
-              <div className="lightbox-content">
+            <div className="lightbox" onClick={closeSlider}>
+              <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
                 <button className="lightbox-close" onClick={closeSlider}>✕</button>
                 <button className="lightbox-arrow left" onClick={prevImage}>❮</button>
                 
@@ -168,7 +167,7 @@ function App() {
             </div>
           </section>
 
-                   {/* 4. SERVICES SECTION */}
+          {/* 4. SERVICES SECTION */}
           <section id="services" className="services-section">
             <div className="container">
               <div className="section-header">
